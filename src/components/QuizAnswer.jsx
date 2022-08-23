@@ -1,15 +1,25 @@
-import { Box, TextField, Checkbox } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Checkbox,
+  Button,
+  FormControlLabel,
+} from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAnswers } from "../features/quiz/answerSlice";
+import { delAnswer, setAnswers } from "../features/quiz/questionSlice";
 
-export default function QuizAnswer({ answerHandler, answerTitle, id }) {
-  const [answer, setAnswer] = useState({ title: "", isCorrect: false, id });
+export default function QuizAnswer({ answerNumber, id }) {
+  const [answer, setAnswer] = useState({
+    answerTitle: "",
+    isCorrect: false,
+    id,
+  });
   const dispatch = useDispatch();
 
   const answerTextHandler = (e) => {
-    setAnswer({ ...answer, title: e.target.value });
-    dispatch(setAnswers({ ...answer, title: e.target.value }));
+    setAnswer({ ...answer, answerTitle: e.target.value });
+    dispatch(setAnswers({ ...answer, answerTitle: e.target.value }));
   };
 
   const correctHandler = (e) => {
@@ -24,10 +34,19 @@ export default function QuizAnswer({ answerHandler, answerTitle, id }) {
         onChange={answerTextHandler}
         value={answer.title}
         id="outlined-basic"
-        label={"Answer " + answerTitle}
+        label={"Answer " + answerNumber}
         variant="outlined"
       />
-      <Checkbox onChange={correctHandler} value={answer.isCorrect} />
+      <FormControlLabel
+        control={
+          <Checkbox onChange={correctHandler} value={answer.isCorrect} />
+        }
+        label="Correct"
+      />
+
+      <Button size="large" onClick={() => dispatch(delAnswer(id))}>
+        Delete
+      </Button>
     </Box>
   );
 }

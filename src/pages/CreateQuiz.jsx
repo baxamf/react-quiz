@@ -3,30 +3,24 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import QuizAnswer from "../components/QuizAnswer";
-import {
-  addAnswer,
-  answerSlice,
-  selectAnswers,
-} from "../features/quiz/answerSlice";
-import { addQuizQuestion, selectQuiz } from "../features/quiz/quizSlice";
+import { addAnswer, selectQuestion } from "../features/quiz/questionSlice";
+import { addQuizQuestion } from "../features/quiz/quizSlice";
 
 export default function CreateQuiz() {
-  const answers = useSelector(selectAnswers);
-  const quiz = useSelector(selectQuiz);
+  const question = useSelector(selectQuestion);
+  const answers = question.answers;
   const dispatch = useDispatch();
-  const [question, setQuestion] = useState({ title: "", answers });
+  const [questionTitle, setQuestionTitle] = useState("");
 
-  const questionHandler = (e) => {
-    setQuestion({ ...question, title: e.target.value });
+  const questionTitleHandler = (e) => {
+    setQuestionTitle(e.target.value);
   };
-
-  console.log(question);
-  console.log(quiz);
-  console.log(answers);
 
   const onSaveQuestion = () => {
-    dispatch(addQuizQuestion({ ...question, answers }));
+    dispatch(addQuizQuestion(question));
   };
+
+  console.log(answers);
 
   return (
     <Box>
@@ -34,14 +28,14 @@ export default function CreateQuiz() {
         Create Quiz Question
       </Typography>
       <TextField
-        value={question.title}
-        onChange={questionHandler}
+        value={questionTitle}
+        onChange={questionTitleHandler}
         id="outlined-basic"
         label="Question"
         variant="outlined"
       />
       {answers.map((answer, index) => (
-        <QuizAnswer key={answer.id} answerTitle={index + 1} id={answer.id} />
+        <QuizAnswer key={answer.id} answerNumber={index + 1} id={answer.id} />
       ))}
       <Button size="large" onClick={() => dispatch(addAnswer())}>
         Add Answer
