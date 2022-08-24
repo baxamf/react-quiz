@@ -1,26 +1,30 @@
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import QuizAnswer from "../components/QuizAnswer";
+import { useAddQuizQuestionMutation } from "../features/api/quizApi";
 import { addAnswer, selectQuestion } from "../features/quiz/questionSlice";
-import { addQuizQuestion } from "../features/quiz/quizSlice";
+import { addQuizQuestion, selectQuiz } from "../features/quiz/quizSlice";
 
 export default function CreateQuiz() {
   const question = useSelector(selectQuestion);
   const answers = question.answers;
   const dispatch = useDispatch();
   const [questionTitle, setQuestionTitle] = useState("");
+  const [addQuestionQuery, test] = useAddQuizQuestionMutation();
+
+  console.log(test);
 
   const questionTitleHandler = (e) => {
     setQuestionTitle(e.target.value);
   };
 
-  const onSaveQuestion = () => {
-    dispatch(addQuizQuestion(question));
+  const onSaveQuestion = async () => {
+    const newQuestion = { ...question, title: questionTitle };
+    const response = await addQuestionQuery(newQuestion);
+    const data = await response.data;
+    dispatch(addQuizQuestion(data));
   };
-
-  console.log(answers);
 
   return (
     <Box>
@@ -28,6 +32,8 @@ export default function CreateQuiz() {
         Create Quiz Question
       </Typography>
       <TextField
+        required
+        type="text"
         value={questionTitle}
         onChange={questionTitleHandler}
         id="outlined-basic"

@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const emptyAnswer = { answerTitle: "", isCorrect: false, id: 1 };
-const emptyQuestion = { title: "", answers: [emptyAnswer] };
+const emptyQuestion = {
+  title: "",
+  answers: [emptyAnswer, { ...emptyAnswer, id: 2 }],
+};
 const initialState = emptyQuestion;
 
 export const questionSlice = createSlice({
@@ -22,8 +25,14 @@ export const questionSlice = createSlice({
       );
     },
     delAnswer: (state, action) => {
-      const answers = state.answers;
-      state.answers = answers.filter((answer) => answer.id !== action.payload);
+      if (state.answers.length > 2) {
+        const answers = state.answers;
+        state.answers = answers.filter(
+          (answer) => answer.id !== action.payload
+        );
+      } else {
+        alert("Question must have at least 2 answers");
+      }
     },
     resetState: (state) => {
       state = initialState;
