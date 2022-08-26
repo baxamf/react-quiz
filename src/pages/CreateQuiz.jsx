@@ -1,54 +1,38 @@
-import { Box, Typography, TextField, Button } from "@mui/material";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import QuizAnswer from "../components/QuizAnswer";
-import { useAddQuizQuestionMutation } from "../features/api/quizApi";
-import { addAnswer, selectQuestion } from "../features/quiz/questionSlice";
-import { addQuizQuestion, selectQuiz } from "../features/quiz/quizSlice";
+import { Box, Button, CircularProgress } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Error from "../components/Error";
+import QuizListQuestionItem from "../components/QuizListQuestionItem";
+
+import { useGetQuizQuestionsQuery } from "../features/api/quizApi";
+import { resetQuestion } from "../features/quiz/questionSlice";
 
 export default function CreateQuiz() {
-  const question = useSelector(selectQuestion);
-  const answers = question.answers;
   const dispatch = useDispatch();
-  const [questionTitle, setQuestionTitle] = useState("");
-  const [addQuestionQuery, test] = useAddQuizQuestionMutation();
+  const navigate = useNavigate();
+  const {
+    data: questions,
+    isError,
+    isLoading,
+    refetch,
+  } = useGetQuizQuestionsQuery();
 
-  console.log(test);
-
-  const questionTitleHandler = (e) => {
-    setQuestionTitle(e.target.value);
-  };
-
-  const onSaveQuestion = async () => {
-    const newQuestion = { ...question, title: questionTitle };
-    const response = await addQuestionQuery(newQuestion);
-    const data = await response.data;
-    dispatch(addQuizQuestion(data));
+  const newQuestion = () => {
+    dispatch(resetQuestion());
+    navigate("new");
   };
 
   return (
-    <Box>
-      <Typography variant="h2" component="h2">
-        Create Quiz Question
-      </Typography>
-      <TextField
-        required
-        type="text"
-        value={questionTitle}
-        onChange={questionTitleHandler}
-        id="outlined-basic"
-        label="Question"
-        variant="outlined"
-      />
-      {answers.map((answer, index) => (
-        <QuizAnswer key={answer.id} answerNumber={index + 1} id={answer.id} />
-      ))}
-      <Button size="large" onClick={() => dispatch(addAnswer())}>
-        Add Answer
+    <Box display="grid" minWidth={400} gap={3}>
+      <Button variant="contained" size="large" onClick={newQuestion}>
+        Add new Question
       </Button>
-      <Button size="large" onClick={() => onSaveQuestion()}>
-        Save Question
-      </Button>
+      {isLoading && <CircularProgress />}
+      {isError && <Error handler={refetch} />}
+      {questions &&
+        questions.map((question) => (
+          <QuizListQuestionItem key={question.id} question={question} />
+        ))}
     </Box>
   );
 }

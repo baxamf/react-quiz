@@ -1,45 +1,43 @@
 import {
-  Box,
   TextField,
-  Checkbox,
   Button,
   FormControlLabel,
+  Switch,
+  Grid,
 } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { delAnswer, setAnswers } from "../features/quiz/questionSlice";
 
-export default function QuizAnswer({ answerNumber, id }) {
-  const [answer, setAnswer] = useState({
-    answerTitle: "",
-    isCorrect: false,
-    id,
-  });
+export default function QuizAnswer({ answerNumber, id, answer }) {
+  const [newAnswer, setAnswer] = useState(answer);
   const dispatch = useDispatch();
 
+  console.log(newAnswer.isCorrect);
+
   const answerTextHandler = (e) => {
-    setAnswer({ ...answer, answerTitle: e.target.value });
-    dispatch(setAnswers({ ...answer, answerTitle: e.target.value }));
+    setAnswer({ ...newAnswer, answerTitle: e.target.value });
+    dispatch(setAnswers({ ...newAnswer, answerTitle: e.target.value }));
   };
 
   const correctHandler = (e) => {
-    setAnswer({ ...answer, isCorrect: !answer.isCorrect });
-    dispatch(setAnswers({ ...answer, isCorrect: !answer.isCorrect }));
+    setAnswer({ ...newAnswer, isCorrect: !newAnswer.isCorrect });
+    dispatch(setAnswers({ ...newAnswer, isCorrect: !newAnswer.isCorrect }));
   };
 
   return (
-    <Box>
+    <Grid container justifyContent="space-between">
       <TextField
+        label={"Answer " + answerNumber}
         required
         onChange={answerTextHandler}
-        value={answer.title}
+        value={newAnswer.answerTitle}
         id="outlined-basic"
-        label={"Answer " + answerNumber}
         variant="outlined"
       />
       <FormControlLabel
         control={
-          <Checkbox onChange={correctHandler} value={answer.isCorrect} />
+          <Switch onChange={correctHandler} checked={newAnswer.isCorrect} />
         }
         label="Correct"
       />
@@ -47,6 +45,6 @@ export default function QuizAnswer({ answerNumber, id }) {
       <Button size="large" onClick={() => dispatch(delAnswer(id))}>
         Delete
       </Button>
-    </Box>
+    </Grid>
   );
 }

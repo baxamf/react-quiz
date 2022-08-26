@@ -34,20 +34,22 @@ export const questionSlice = createSlice({
         alert("Question must have at least 2 answers");
       }
     },
-    resetState: (state) => {
-      state = initialState;
+    setQuestion: (state, action) => {
+      const question = action.payload;
+      state.id = question.id;
+      state.title = question.title;
+      state.answers = question.answers;
+    },
+    resetQuestion: (state) => {
+      state.title = emptyQuestion.title;
+      state.answers = emptyQuestion.answers;
     },
   },
 });
 
 export const selectQuestion = (state) => state.question;
 
-export const { addAnswer, setAnswers, delAnswer } = questionSlice.actions;
+export const { addAnswer, setAnswers, delAnswer, resetQuestion, setQuestion } =
+  questionSlice.actions;
 
 export default questionSlice.reducer;
-
-// const answerHandler = (newAnswer) => {
-//   setAnswers(
-//     state.map((answer) => (answer.id === newAnswer.id ? newAnswer : answer))
-//   );
-// };

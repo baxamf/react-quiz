@@ -13,4 +13,5 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(quizApi.middleware),
+  devTools: process.env.NODE_ENV !== "production",
 });
