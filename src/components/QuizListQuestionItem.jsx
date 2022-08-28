@@ -10,7 +10,6 @@ export default function QuizListQuestionItem({ question }) {
   const [delQuizQuestion] = useDelQuizQuestionMutation();
 
   const editHandler = () => {
-    dispatch(setQuestion(question));
     navigate(`${question.id}`);
   };
 

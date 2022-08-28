@@ -1,15 +1,18 @@
-import { Grid, Typography, TextField, Button } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { Box, Grid, Typography, TextField, Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addAnswer,
   resetQuestion,
+  selectQuestion,
   setTitle,
 } from "../features/quiz/questionSlice";
 import FormAnswer from "./FormAnswer";
 
-export default function FormQuestion({ question, submitHandler, title }) {
+export default function FormQuestion({ submitHandler }) {
   const dispatch = useDispatch();
+  const question = useSelector(selectQuestion);
   const answers = question.answers;
+
   const resetHandler = () => {
     dispatch(resetQuestion());
   };
@@ -24,15 +27,9 @@ export default function FormQuestion({ question, submitHandler, title }) {
   };
 
   return (
-    <Grid
-      display="grid"
-      component="form"
-      container
-      gap={3}
-      onSubmit={onSubmitHandler}
-    >
+    <Box display="grid" component="form" gap={3} onSubmit={onSubmitHandler}>
       <Typography variant="h4" component="h4">
-        {title}
+        {question.title ? "Edit Question" : "Create new Question"}
       </Typography>
       <TextField
         fullWidth
@@ -59,6 +56,6 @@ export default function FormQuestion({ question, submitHandler, title }) {
       <Button size="large" onClick={resetHandler}>
         Reset
       </Button>
-    </Grid>
+    </Box>
   );
 }

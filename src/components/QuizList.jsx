@@ -19,7 +19,7 @@ export default function QuizList() {
 
   const newQuestion = () => {
     dispatch(resetQuestion());
-    // navigate("new");
+    navigate("/create");
   };
 
   return (

@@ -30,7 +30,6 @@ export default function FormAnswer({ answer }) {
         required
         onChange={answerTextHandler}
         value={answer.answerTitle}
-        id="outlined-basic"
         variant="outlined"
       />
       <FormControlLabel

@@ -11,10 +11,21 @@ export const quizApi = createApi({
       query: () => "quiz",
       providesTags: (result) => ["Quiz"],
     }),
+    getQuizQuestion: builder.query({
+      query: (id) => `quiz/${id}`,
+    }),
     addQuizQuestion: builder.mutation({
       query: (question) => ({
         url: "quiz",
         method: "POST",
+        body: question,
+      }),
+      invalidatesTags: ["Quiz"],
+    }),
+    updateQuestion: builder.mutation({
+      query: (id, ...question) => ({
+        url: `quiz/${id}`,
+        method: "PUT",
         body: question,
       }),
       invalidatesTags: ["Quiz"],
@@ -30,7 +41,9 @@ export const quizApi = createApi({
 });
 
 export const {
+  useGetQuizQuestionQuery,
   useGetQuizQuestionsQuery,
   useAddQuizQuestionMutation,
   useDelQuizQuestionMutation,
+  useUpdateQuestionMutation,
 } = quizApi;
