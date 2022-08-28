@@ -11,6 +11,18 @@ export const questionSlice = createSlice({
   name: "question",
   initialState,
   reducers: {
+    setQuestion: (state, action) => {
+      const question = action.payload;
+      state.title = question.title;
+      state.answers = question.answers;
+    },
+    resetQuestion: (state) => {
+      state.title = emptyQuestion.title;
+      state.answers = emptyQuestion.answers;
+    },
+    setTitle: (state, action) => {
+      state.title = action.payload;
+    },
     addAnswer: (state) => {
       const answers = state.answers;
       state.answers.push({
@@ -34,22 +46,18 @@ export const questionSlice = createSlice({
         alert("Question must have at least 2 answers");
       }
     },
-    setQuestion: (state, action) => {
-      const question = action.payload;
-      state.id = question.id;
-      state.title = question.title;
-      state.answers = question.answers;
-    },
-    resetQuestion: (state) => {
-      state.title = emptyQuestion.title;
-      state.answers = emptyQuestion.answers;
-    },
   },
 });
 
 export const selectQuestion = (state) => state.question;
 
-export const { addAnswer, setAnswers, delAnswer, resetQuestion, setQuestion } =
-  questionSlice.actions;
+export const {
+  addAnswer,
+  setTitle,
+  setAnswers,
+  delAnswer,
+  resetQuestion,
+  setQuestion,
+} = questionSlice.actions;
 
 export default questionSlice.reducer;
