@@ -1,11 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { useDelQuizQuestionMutation } from "../features/api/quizApi";
-import { setQuestion } from "../features/quiz/questionSlice";
-import { useDispatch } from "react-redux";
 
-export default function QuizListQuestionItem({ question }) {
-  const dispatch = useDispatch();
+export default function QuizListQuestionItem({ question, url }) {
   const navigate = useNavigate();
   const [delQuizQuestion] = useDelQuizQuestionMutation();
 
@@ -13,14 +10,19 @@ export default function QuizListQuestionItem({ question }) {
     navigate(`${question.id}`);
   };
 
+  const delHandler = async () => {
+    await delQuizQuestion(question.id);
+    question.id === url && navigate("/create");
+  };
+
   return (
     <Grid container alignItems="center" justifyContent="space-between" gap={1}>
       <Typography>{question.title}</Typography>
       <Grid item container gap={1}>
-        <Button variant="outlined" onClick={() => editHandler()}>
+        <Button variant="outlined" onClick={editHandler}>
           Edit
         </Button>
-        <Button variant="outlined" onClick={() => delQuizQuestion(question.id)}>
+        <Button variant="outlined" onClick={delHandler}>
           Delete
         </Button>
       </Grid>

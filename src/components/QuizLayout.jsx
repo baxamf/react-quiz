@@ -4,7 +4,7 @@ import QuizList from "./QuizList";
 
 export default function QuizLayout() {
   return (
-    <Grid container justifyContent="space-evenly" alignItems="start">
+    <Grid container gap={6} justifyContent="space-evenly" alignItems="start">
       <QuizList />
       <Outlet />
     </Grid>

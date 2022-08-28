@@ -8,7 +8,7 @@ import {
 } from "../features/quiz/questionSlice";
 import FormAnswer from "./FormAnswer";
 
-export default function FormQuestion({ submitHandler }) {
+export default function FormQuestion({ submitHandler, refresh }) {
   const dispatch = useDispatch();
   const question = useSelector(selectQuestion);
   const answers = question.answers;
@@ -56,6 +56,11 @@ export default function FormQuestion({ submitHandler }) {
       <Button size="large" onClick={resetHandler}>
         Reset
       </Button>
+      {refresh && (
+        <Button size="large" onClick={refresh}>
+          Undo
+        </Button>
+      )}
     </Box>
   );
 }

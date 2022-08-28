@@ -23,8 +23,8 @@ export const quizApi = createApi({
       invalidatesTags: ["Quiz"],
     }),
     updateQuestion: builder.mutation({
-      query: (id, ...question) => ({
-        url: `quiz/${id}`,
+      query: (question) => ({
+        url: `quiz/${question.id}`,
         method: "PUT",
         body: question,
       }),

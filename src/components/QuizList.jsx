@@ -1,6 +1,7 @@
 import { Grid, Button, CircularProgress } from "@mui/material";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Error from "../components/Error";
 import QuizListQuestion from "../components/QuizListQuestionItem";
 
@@ -9,6 +10,7 @@ import { resetQuestion } from "../features/quiz/questionSlice";
 
 export default function QuizList() {
   const dispatch = useDispatch();
+  const { quizId } = useParams();
   const navigate = useNavigate();
   const {
     data: questions,
@@ -16,6 +18,10 @@ export default function QuizList() {
     isLoading,
     refetch,
   } = useGetQuizQuestionsQuery();
+
+  useEffect(() => {
+    dispatch(resetQuestion());
+  }, [quizId]);
 
   const newQuestion = () => {
     dispatch(resetQuestion());
@@ -37,7 +43,11 @@ export default function QuizList() {
       {isError && <Error handler={refetch} />}
       {questions &&
         questions.map((question) => (
-          <QuizListQuestion key={question.id} question={question} />
+          <QuizListQuestion
+            key={question.id}
+            question={question}
+            url={quizId}
+          />
         ))}
     </Grid>
   );
