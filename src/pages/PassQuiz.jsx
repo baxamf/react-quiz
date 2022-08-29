@@ -1,23 +1,25 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Box, Grid } from "@mui/material";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import FinalScore from "../components/FinalScore";
 import PassForm from "../components/PassForm";
 import PassQuestion from "../components/PassQuestion";
 import PlayerInfo from "../components/PlayerInfo";
-import QuizList from "../components/QuizList";
 import { useGetQuizQuestionsQuery } from "../features/api/quizApi";
-import { selectQuestion } from "../features/quiz/questionSlice";
-import { selectQuiz, setPlayerName } from "../features/quiz/quizSlice";
+import { resetPlayer, selectQuiz } from "../features/quiz/quizSlice";
 
 export default function PassQuiz() {
+  const dispatch = useDispatch();
   const { data: quiz } = useGetQuizQuestionsQuery();
   const questionAmount = quiz ? quiz.length : 0;
-  const scorePerQuestion = quiz ? 100 / quiz.length : 0;
   const { name, score, question } = useSelector(selectQuiz);
 
+  useEffect(() => {
+    dispatch(resetPlayer());
+  }, []);
+
   if (question >= questionAmount && name) {
-    return <PlayerInfo name={name} score={score} />;
+    return <FinalScore name={name} score={score} question={question} />;
   } else {
     return (
       <Grid
@@ -28,19 +30,16 @@ export default function PassQuiz() {
         alignItems="center"
       >
         {name ? (
-          <PlayerInfo name={name} score={score} />
+          <PlayerInfo name={name} score={score} question={question} />
         ) : (
           <PassForm firstQuestion={quiz && quiz[0]} />
         )}
         {name && (
           <>
             <Box>
-              Question {question + 1}/{quiz.length}{" "}
+              Question {question + 1} / {questionAmount}{" "}
             </Box>{" "}
-            <PassQuestion
-              question={quiz[question]}
-              scorePerQuestion={scorePerQuestion}
-            />
+            <PassQuestion question={quiz[question]} />
           </>
         )}
       </Grid>

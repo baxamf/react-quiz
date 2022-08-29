@@ -13,7 +13,7 @@ export default function NewQuestion() {
       await addQuestionQuery(question);
       dispatch(resetQuestion());
     } else {
-      alert("Need 1 correct answer at least");
+      alert("Need at least 1 correct & 1 wrong answers");
     }
   };
 

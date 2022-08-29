@@ -1,11 +1,10 @@
 import { Box, Button } from "@mui/material";
-import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectQuestion } from "../features/quiz/questionSlice";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { nextQuestion, setScore } from "../features/quiz/quizSlice";
 import compareAnswers from "../services/compareAnswers";
 
-export default function PassQuestion({ question, scorePerQuestion }) {
+export default function PassQuestion({ question }) {
   const dispatch = useDispatch();
   const answers = question.answers;
   const correct = [];
@@ -13,8 +12,12 @@ export default function PassQuestion({ question, scorePerQuestion }) {
   const [choise, setChoise] = useState([]);
 
   const next = () => {
+    if (choise.length === 0) {
+      alert("You must select one answer at least");
+      return;
+    }
     if (compareAnswers(correct, choise)) {
-      dispatch(setScore(scorePerQuestion));
+      dispatch(setScore());
       dispatch(nextQuestion());
       setChoise([]);
     } else {

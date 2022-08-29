@@ -9,17 +9,23 @@ export const quizSlice = createSlice({
     setPlayerName: (state, action) => {
       state.name = action.payload;
     },
-    setScore: (state, action) => {
-      state.score += action.payload;
+    setScore: (state) => {
+      state.score += 1;
     },
     nextQuestion: (state) => {
       state.question += 1;
+    },
+    resetPlayer: (state) => {
+      state.name = "";
+      state.score = 0;
+      state.question = 0;
     },
   },
 });
 
 export const selectQuiz = (state) => state.quiz;
 
-export const { setPlayerName, setScore, nextQuestion } = quizSlice.actions;
+export const { setPlayerName, setScore, nextQuestion, resetPlayer } =
+  quizSlice.actions;
 
 export default quizSlice.reducer;
