@@ -1,32 +1,25 @@
-// import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import { quizApi, useGetQuizQuestionsQuery } from "../api/quizApi";
+import { createSlice } from "@reduxjs/toolkit";
 
-// const initialState = [];
+const initialState = { name: "", score: 0, question: 0 };
 
-// export const quizSlice = createSlice({
-//   name: "quiz",
-//   initialState,
-//   reducers: {
-//     addQuizQuestion: (state, action) => {
-//       state.push(action.payload);
-//     },
-//     addQuizQuestions: (state, action) => {
-//       state = [...action.payload];
-//     },
-//   },
-//   // extraReducers: (builder) => {
-//   //   builder.addCase(
-//   //     quizApi.endpoints.getQuizQuestions().fulfilled,
-//   //     (state, action) => {
-//   //       console.log(action);
-//   //       state = action.payload;
-//   //     }
-//   //   );
-//   // },
-// });
+export const quizSlice = createSlice({
+  name: "quiz",
+  initialState,
+  reducers: {
+    setPlayerName: (state, action) => {
+      state.name = action.payload;
+    },
+    setScore: (state, action) => {
+      state.score += action.payload;
+    },
+    nextQuestion: (state) => {
+      state.question += 1;
+    },
+  },
+});
 
-// export const selectQuiz = (state) => state.quiz;
+export const selectQuiz = (state) => state.quiz;
 
-// export const { addQuizQuestion, addQuizQuestions } = quizSlice.actions;
+export const { setPlayerName, setScore, nextQuestion } = quizSlice.actions;
 
-// export default quizSlice.reducer;
+export default quizSlice.reducer;

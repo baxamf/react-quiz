@@ -1,5 +1,6 @@
 import { Box, Grid, Typography, TextField, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   addAnswer,
   resetQuestion,
@@ -9,6 +10,7 @@ import {
 import FormAnswer from "./FormAnswer";
 
 export default function FormQuestion({ submitHandler, refresh }) {
+  const { quizId } = useParams();
   const dispatch = useDispatch();
   const question = useSelector(selectQuestion);
   const answers = question.answers;
@@ -29,7 +31,7 @@ export default function FormQuestion({ submitHandler, refresh }) {
   return (
     <Box display="grid" component="form" gap={3} onSubmit={onSubmitHandler}>
       <Typography variant="h4" component="h4">
-        {question.title ? "Edit Question" : "Create new Question"}
+        {quizId ? "Edit Question" : "Create new Question"}
       </Typography>
       <TextField
         fullWidth
@@ -53,14 +55,16 @@ export default function FormQuestion({ submitHandler, refresh }) {
       <Button variant="contained" type="submit" size="large">
         Save Question
       </Button>
-      <Button size="large" onClick={resetHandler}>
-        Reset
-      </Button>
-      {refresh && (
-        <Button size="large" onClick={refresh}>
-          Undo
+      <Grid container>
+        <Button size="large" onClick={resetHandler}>
+          Reset
         </Button>
-      )}
+        {refresh && (
+          <Button size="large" onClick={refresh}>
+            Undo
+          </Button>
+        )}
+      </Grid>
     </Box>
   );
 }

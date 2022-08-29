@@ -13,6 +13,7 @@ export const quizApi = createApi({
     }),
     getQuizQuestion: builder.query({
       query: (id) => `quiz/${id}`,
+      providesTags: (result, id) => [{ type: "Quiz", id }],
     }),
     addQuizQuestion: builder.mutation({
       query: (question) => ({
