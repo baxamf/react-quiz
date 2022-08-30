@@ -24,7 +24,8 @@ export default function PassQuiz() {
     return (
       <Grid
         container
-        gap={6}
+        gap={4}
+        padding="2rem"
         display="grid"
         justifyContent="center"
         alignItems="center"
@@ -37,8 +38,8 @@ export default function PassQuiz() {
         {name && (
           <>
             <Box>
-              Question {question + 1} / {questionAmount}{" "}
-            </Box>{" "}
+              Question {question + 1} / {questionAmount}
+            </Box>
             <PassQuestion question={quiz[question]} />
           </>
         )}

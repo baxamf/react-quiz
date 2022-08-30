@@ -28,8 +28,24 @@ export default function QuizList() {
     navigate("/create");
   };
 
+  const QuizListContainer = (props) => (
+    <Grid
+      container
+      sx={{
+        minWidth: "500px",
+        flex: "1 0",
+        display: "grid",
+        justifyContent: "center",
+        gap: 3,
+        paddingInline: "2vw",
+      }}
+    >
+      {props.children}
+    </Grid>
+  );
+
   return (
-    <Grid display="grid" gap={3}>
+    <QuizListContainer>
       <Grid container gap={2}>
         <Button variant="contained" size="large" onClick={newQuestion}>
           Add new Question
@@ -49,6 +65,6 @@ export default function QuizList() {
             url={quizId}
           />
         ))}
-    </Grid>
+    </QuizListContainer>
   );
 }

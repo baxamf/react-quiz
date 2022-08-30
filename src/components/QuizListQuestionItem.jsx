@@ -1,5 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Grid, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Divider,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { useDelQuizQuestionMutation } from "../features/api/quizApi";
 
 export default function QuizListQuestionItem({ question, url }) {
@@ -16,16 +24,21 @@ export default function QuizListQuestionItem({ question, url }) {
   };
 
   return (
-    <Grid container alignItems="center" justifyContent="space-between" gap={1}>
-      <Typography>{question.title}</Typography>
-      <Grid item container gap={1}>
-        <Button variant="outlined" onClick={editHandler}>
-          Edit
-        </Button>
-        <Button variant="outlined" onClick={delHandler}>
-          Delete
-        </Button>
-      </Grid>
+    <Grid gap={2}>
+      <Card variant="outlined">
+        <CardContent>
+          <Typography variant="h6">{question.title}</Typography>
+        </CardContent>
+        <Divider variant="middle" />
+        <CardActions>
+          <Button size="large" variant="outlined" onClick={editHandler}>
+            Edit
+          </Button>
+          <Button size="large" onClick={delHandler}>
+            Delete
+          </Button>
+        </CardActions>
+      </Card>
     </Grid>
   );
 }

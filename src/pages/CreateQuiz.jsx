@@ -2,11 +2,23 @@ import { Grid } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import QuizList from "../components/QuizList";
 
-export default function QuizLayout() {
+export default function CreateQuiz() {
+  const CreateQuizContainer = (props) => (
+    <Grid
+      container
+      sx={{
+        alignItems: "start",
+        padding: "2rem",
+      }}
+    >
+      {props.children}
+    </Grid>
+  );
+
   return (
-    <Grid container gap={6} justifyContent="space-evenly" alignItems="start">
+    <CreateQuizContainer>
       <QuizList />
       <Outlet />
-    </Grid>
+    </CreateQuizContainer>
   );
 }

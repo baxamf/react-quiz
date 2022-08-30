@@ -11,9 +11,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 20px;
-  padding: 1rem;
-  min-height: 100vh;
-  background-color: rgb(225, 231, 236);
 }
 
 .chosen {

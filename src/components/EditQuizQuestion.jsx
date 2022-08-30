@@ -1,7 +1,8 @@
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Button } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+import useError from "../app/hooks/useError";
 import {
   useGetQuizQuestionQuery,
   useUpdateQuestionMutation,
@@ -22,6 +23,7 @@ export default function EditQuestion() {
     refetch,
   } = useGetQuizQuestionQuery(quizId);
   const [updateQuestion] = useUpdateQuestionMutation();
+  const { error, setError, ErrorWindow } = useError();
 
   useEffect(() => {
     question && dispatch(setQuestion(question));
@@ -32,7 +34,7 @@ export default function EditQuestion() {
       await updateQuestion({ ...update, id: quizId });
       navigate("/create");
     } else {
-      alert("Need 1 correct answer at least");
+      setError(true);
     }
   };
 
@@ -42,7 +44,8 @@ export default function EditQuestion() {
 
   return (
     <>
-      {isError && <Error handler={refetch} />}
+      {error && ErrorWindow("Need at least 1 correct & 1 wrong answers")}
+      {isError && <Button onClick={refetch}>Reload</Button>}
       {isLoading && <CircularProgress />}
       {question && (
         <FormQuestion refresh={refresh} submitHandler={onEditQuestion} />
