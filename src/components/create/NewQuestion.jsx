@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import useError from "../app/hooks/useError";
-import { useAddQuizQuestionMutation } from "../features/api/quizApi";
-import { resetQuestion } from "../features/quiz/questionSlice";
-import { hasCorrect } from "../services/hasCorrect";
+import useError from "../../hooks/useError";
+import { useAddQuizQuestionMutation } from "../../features/quiz/quizApi";
+import { resetQuestion } from "../../features/quiz/questionSlice";
+import { hasCorrect } from "../../services/hasCorrect";
 import FormQuestion from "./FormQuestion";
 
 export default function NewQuestion() {

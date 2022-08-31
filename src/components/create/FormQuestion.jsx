@@ -1,11 +1,7 @@
-import {
-  Box,
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  TextareaAutosize,
-} from "@mui/material";
+import { Box, Grid, Typography, TextField, Button } from "@mui/material";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -13,7 +9,7 @@ import {
   resetQuestion,
   selectQuestion,
   setTitle,
-} from "../features/quiz/questionSlice";
+} from "../../features/quiz/questionSlice";
 import FormAnswer from "./FormAnswer";
 
 export default function FormQuestion({ submitHandler, refresh }) {
@@ -37,25 +33,14 @@ export default function FormQuestion({ submitHandler, refresh }) {
 
   return (
     <Box
-      display="grid"
+      className="quiz-list-container"
       component="form"
-      gap="2rem"
       onSubmit={onSubmitHandler}
-      minWidth={450}
-      flex="1 0"
-      paddingInline="2vw"
     >
-      <Typography variant="h4" component="h4">
+      <Typography variant="h4" color="text.primary">
         {quizId ? "Edit Question" : "Create new Question"}
       </Typography>
-      <TextareaAutosize
-        placeholder="Enter question text here..."
-        minRows={5}
-        required
-        value={question.title}
-        onChange={questionTitleHandler}
-      />
-      {/* <TextField
+      <TextField
         fullWidth
         required
         value={question.title}
@@ -63,12 +48,13 @@ export default function FormQuestion({ submitHandler, refresh }) {
         id="outlined-basic"
         label="Question"
         variant="outlined"
-      /> */}
+      />
       {answers.map((answer) => (
         <FormAnswer answer={answer} key={answer.id} />
       ))}
       <Grid container gap={2}>
         <Button
+          startIcon={<AddBoxIcon />}
           variant="outlined"
           size="large"
           onClick={() => dispatch(addAnswer())}
@@ -76,11 +62,11 @@ export default function FormQuestion({ submitHandler, refresh }) {
           Add Answer
         </Button>
         <Button size="large" onClick={resetHandler}>
-          Reset
+          <ClearAllIcon />
         </Button>
         {refresh && (
           <Button size="large" onClick={refresh}>
-            Undo
+            <RefreshIcon />
           </Button>
         )}
         <Button variant="contained" type="submit" size="large">

@@ -16,10 +16,7 @@ export const questionSlice = createSlice({
       state.title = question.title;
       state.answers = question.answers;
     },
-    resetQuestion: (state) => {
-      state.title = emptyQuestion.title;
-      state.answers = emptyQuestion.answers;
-    },
+    resetQuestion: () => initialState,
     setTitle: (state, action) => {
       state.title = action.payload;
     },
@@ -37,14 +34,8 @@ export const questionSlice = createSlice({
       );
     },
     delAnswer: (state, action) => {
-      if (state.answers.length > 2) {
-        const answers = state.answers;
-        state.answers = answers.filter(
-          (answer) => answer.id !== action.payload
-        );
-      } else {
-        alert("Question must have at least 2 answers");
-      }
+      const answers = state.answers;
+      state.answers = answers.filter((answer) => answer.id !== action.payload);
     },
   },
 });

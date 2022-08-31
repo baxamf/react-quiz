@@ -1,24 +1,12 @@
 import { Grid } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import QuizList from "../components/QuizList";
+import QuizList from "../components/create/QuizList";
 
 export default function CreateQuiz() {
-  const CreateQuizContainer = (props) => (
-    <Grid
-      container
-      sx={{
-        alignItems: "start",
-        padding: "2rem",
-      }}
-    >
-      {props.children}
-    </Grid>
-  );
-
   return (
-    <CreateQuizContainer>
+    <Grid container alignItems="start" gap={10}>
       <QuizList />
       <Outlet />
-    </CreateQuizContainer>
+    </Grid>
   );
 }

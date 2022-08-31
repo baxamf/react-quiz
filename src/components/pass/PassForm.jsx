@@ -1,27 +1,23 @@
-import { Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setPlayerName } from "../features/quiz/quizSlice";
+import { setPlayerName } from "../../features/quiz/quizSlice";
 
 export default function PassForm() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [name, setName] = useState("");
 
   const onChangeName = (e) => {
     setName(e.target.value);
   };
 
-  const startQuiz = () => {
+  const startQuiz = (e) => {
+    e.preventDefault();
     dispatch(setPlayerName(name));
   };
 
   return (
-    <>
-      <Button variant="outlined" size="large" onClick={() => navigate("/")}>
-        Back to home page
-      </Button>
+    <Box display="grid" gap={2} component="form" onSubmit={startQuiz}>
       <TextField
         required
         id="outlined-basic"
@@ -30,9 +26,9 @@ export default function PassForm() {
         value={name}
         onChange={onChangeName}
       />
-      <Button variant="contained" size="large" onClick={startQuiz}>
+      <Button type="submit" variant="contained" size="large">
         Start Quiz
       </Button>
-    </>
+    </Box>
   );
 }

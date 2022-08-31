@@ -5,7 +5,7 @@ export default function useResultStorage(name, newResult) {
 
   useEffect(() => {
     localStorage.setItem(name, newResult);
-  }, [result]);
+  }, [result, name, newResult]);
 
   return result;
 }

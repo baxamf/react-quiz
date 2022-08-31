@@ -2,14 +2,13 @@ import { CircularProgress, Button } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import useError from "../app/hooks/useError";
+import useError from "../../hooks/useError";
 import {
   useGetQuizQuestionQuery,
   useUpdateQuestionMutation,
-} from "../features/api/quizApi";
-import { setQuestion } from "../features/quiz/questionSlice";
-import { hasCorrect } from "../services/hasCorrect";
-import Error from "./Error";
+} from "../../features/quiz/quizApi";
+import { setQuestion } from "../../features/quiz/questionSlice";
+import { hasCorrect } from "../../services/hasCorrect";
 import FormQuestion from "./FormQuestion";
 
 export default function EditQuestion() {
