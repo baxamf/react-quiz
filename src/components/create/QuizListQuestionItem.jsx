@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Grid, Typography } from "@mui/material";
+import { Button, Card, Grid, IconButton, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 import { useDelQuizQuestionMutation } from "../../features/quiz/quizApi";
-import { Box } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { setQuestion } from "../../features/quiz/questionSlice";
 
@@ -22,23 +21,20 @@ export default function QuizListQuestionItem({ question, url }) {
   };
 
   return (
-    <Card variant="outlined">
-      <Grid
-        container
-        alignItems="center"
-        justifyContent="space-between"
-        paddingLeft="1rem"
-      >
-        <Typography variant="subtitle1">{question.title}</Typography>
-        <Box>
-          <Button size="large" onClick={editHandler}>
-            <EditIcon />
-          </Button>
-          <Button color="error" size="large" onClick={delHandler}>
-            <DeleteIcon />
-          </Button>
-        </Box>
+    <Grid container alignItems="center" flexWrap="wrap">
+      <Card variant="outlined" sx={{ flex: "1 0 auto", padding: "0.7rem" }}>
+        <Typography lineHeight={1.25} variant="subtitle1">
+          {question.title}
+        </Typography>
+      </Card>
+      <Grid container justifyContent="space-between">
+        <Button onClick={editHandler}>
+          <EditIcon />
+        </Button>
+        <IconButton color="error" onClick={delHandler}>
+          <BackspaceIcon />
+        </IconButton>
       </Grid>
-    </Card>
+    </Grid>
   );
 }

@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button } from "@mui/material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -28,7 +28,7 @@ export default function FormQuestion({ submitHandler }) {
       component="form"
       onSubmit={onSubmitHandler}
     >
-      <Typography variant="h4" color="text.primary">
+      <Typography variant="h4" fontWeight="bold" color="text.primary">
         {question.id ? "Edit Question" : "Create new Question"}
       </Typography>
       <TextField
@@ -43,7 +43,7 @@ export default function FormQuestion({ submitHandler }) {
       {answers.map((answer) => (
         <FormAnswer answer={answer} key={answer.id} />
       ))}
-      <Grid container gap={2}>
+      <Box display="grid" gap={2}>
         <Button
           startIcon={<AddBoxIcon />}
           variant="outlined"
@@ -55,7 +55,7 @@ export default function FormQuestion({ submitHandler }) {
         <Button variant="contained" type="submit" size="large">
           Save Question
         </Button>
-      </Grid>
+      </Box>
     </Box>
   );
 }

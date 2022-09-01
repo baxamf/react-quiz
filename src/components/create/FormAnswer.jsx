@@ -1,6 +1,5 @@
-import { TextField, Button, Switch, Grid, Typography } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Box } from "@mui/system";
+import { TextField, Switch, Grid, Typography, IconButton } from "@mui/material";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 import { useDispatch, useSelector } from "react-redux";
 import {
   delAnswer,
@@ -31,7 +30,7 @@ export default function FormAnswer({ answer }) {
   };
 
   return (
-    <Grid container justifyContent="space-between" gap={2}>
+    <Grid container>
       {error && ErrorWindow("Question must have at least 2 answers")}
       <TextField
         label={"Answer " + answer.id}
@@ -39,16 +38,21 @@ export default function FormAnswer({ answer }) {
         onChange={answerTextHandler}
         value={answer.answerTitle}
         variant="outlined"
-        sx={{ flex: "1 0" }}
+        sx={{ flex: "1 0 auto" }}
       />
-      <Box>
+      <Grid container alignItems="center">
         <Switch onChange={correctHandler} checked={answer.isCorrect} />
-        <Typography color="text.secondary">Correct</Typography>
-      </Box>
-
-      <Button color="error" size="large" onClick={onDelAnswer}>
-        <DeleteIcon />
-      </Button>
+        <Typography color={answer.isCorrect ? "primary" : "text.secondary"}>
+          Correct
+        </Typography>
+        <IconButton
+          sx={{ marginLeft: "auto" }}
+          color="error"
+          onClick={onDelAnswer}
+        >
+          <BackspaceIcon />
+        </IconButton>
+      </Grid>
     </Grid>
   );
 }

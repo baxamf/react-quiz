@@ -1,4 +1,4 @@
-import { Box, Button, Card, Divider, Grid, Typography } from "@mui/material";
+import { Box, Button, Card, Divider, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,11 +60,6 @@ export default function PassQuestion({ question, questionAmount }) {
           {answers.map((answer) => (
             <PassAnswer key={answer.id} answer={answer} onChoise={onChoise} />
           ))}
-        </Stack>
-        <Grid container justifyContent="space-between">
-          <Button variant="outlined" size="large" onClick={backHome}>
-            Cancel and Quit
-          </Button>
           <Button
             disabled={disabled}
             variant="contained"
@@ -73,8 +68,9 @@ export default function PassQuestion({ question, questionAmount }) {
           >
             Next Question
           </Button>
-        </Grid>
+        </Stack>
       </Card>
+      <Button onClick={backHome}>Cancel and Quit</Button>
     </Box>
   );
 }

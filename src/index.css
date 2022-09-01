@@ -31,11 +31,7 @@ body {
 }
 
 .quiz-list-container {
-  flex: 1 0 400px;
+  flex: 1 0 300px;
   display: grid;
-  gap: 1rem;
-}
-
-.chosen {
-  background-color: #ccc;
+  gap: 2rem;
 }
