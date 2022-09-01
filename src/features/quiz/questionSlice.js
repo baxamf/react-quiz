@@ -12,13 +12,13 @@ export const questionSlice = createSlice({
   initialState,
   reducers: {
     setQuestion: (state, action) => action.payload,
-    // const question = action.payload;
-    // state.title = question.title;
-    // state.answers = question.answers;
+
     resetQuestion: () => initialState,
+
     setTitle: (state, action) => {
       state.title = action.payload;
     },
+
     addAnswer: (state) => {
       const answers = state.answers;
       state.answers.push({
@@ -26,12 +26,14 @@ export const questionSlice = createSlice({
         id: answers[answers.length - 1].id + 1,
       });
     },
+
     setAnswers: (state, action) => {
       const answers = state.answers;
       state.answers = answers.map((answer) =>
         answer.id === action.payload.id ? action.payload : answer
       );
     },
+
     delAnswer: (state, action) => {
       const answers = state.answers;
       state.answers = answers.filter((answer) => answer.id !== action.payload);

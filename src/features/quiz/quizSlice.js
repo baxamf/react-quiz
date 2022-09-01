@@ -26,9 +26,11 @@ export const quizSlice = createSlice({
     setPlayerName: (state, action) => {
       state.name = action.payload;
     },
+
     setScore: (state) => {
       state.score += 1;
     },
+
     resetPlayer: () => initialState,
 
     setChoise: (state, action) => {
@@ -41,6 +43,7 @@ export const quizSlice = createSlice({
       }
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(nextQuestionAsync.pending, (state) => {
