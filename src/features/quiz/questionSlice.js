@@ -11,11 +11,10 @@ export const questionSlice = createSlice({
   name: "question",
   initialState,
   reducers: {
-    setQuestion: (state, action) => {
-      const question = action.payload;
-      state.title = question.title;
-      state.answers = question.answers;
-    },
+    setQuestion: (state, action) => action.payload,
+    // const question = action.payload;
+    // state.title = question.title;
+    // state.answers = question.answers;
     resetQuestion: () => initialState,
     setTitle: (state, action) => {
       state.title = action.payload;

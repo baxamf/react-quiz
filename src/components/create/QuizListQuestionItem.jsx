@@ -4,13 +4,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDelQuizQuestionMutation } from "../../features/quiz/quizApi";
 import { Box } from "@mui/system";
+import { useDispatch } from "react-redux";
+import { setQuestion } from "../../features/quiz/questionSlice";
 
 export default function QuizListQuestionItem({ question, url }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [delQuizQuestion] = useDelQuizQuestionMutation();
 
   const editHandler = () => {
-    navigate(`${question.id}`);
+    dispatch(setQuestion(question));
   };
 
   const delHandler = async () => {

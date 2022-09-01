@@ -1,22 +1,28 @@
 import { useDispatch } from "react-redux";
 import useError from "../../hooks/useError";
-import { useAddQuizQuestionMutation } from "../../features/quiz/quizApi";
+import {
+  useAddQuizQuestionMutation,
+  useUpdateQuestionMutation,
+} from "../../features/quiz/quizApi";
 import { resetQuestion } from "../../features/quiz/questionSlice";
 import { hasCorrect } from "../../services/hasCorrect";
 import FormQuestion from "./FormQuestion";
 
-export default function NewQuestion() {
+export default function Question() {
   const dispatch = useDispatch();
   const [addQuestionQuery] = useAddQuizQuestionMutation();
+  const [updateQuestion] = useUpdateQuestionMutation();
   const { error, setError, ErrorWindow } = useError();
 
   const onSaveQuestion = async (question) => {
     if (hasCorrect(question.answers)) {
-      await addQuestionQuery(question);
-      dispatch(resetQuestion());
+      question.id
+        ? await updateQuestion(question)
+        : await addQuestionQuery(question);
     } else {
       setError(true);
     }
+    dispatch(resetQuestion());
   };
 
   return (
