@@ -21,6 +21,7 @@ export default function Question() {
         : await addQuestionQuery(question);
     } else {
       setError(true);
+      return;
     }
     dispatch(resetQuestion());
   };
