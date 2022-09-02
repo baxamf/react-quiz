@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   name: "",
+  role: "",
   score: 0,
   question: 0,
   status: false,
@@ -25,10 +26,18 @@ export const quizSlice = createSlice({
   reducers: {
     setPlayerName: (state, action) => {
       state.name = action.payload;
+      action.payload === "admin"
+        ? (state.role = "ADMIN")
+        : (state.role = "USER");
     },
 
     setScore: (state) => {
       state.score += 1;
+    },
+
+    tryAgain: (state) => {
+      state.score = 0;
+      state.question = 0;
     },
 
     resetPlayer: () => initialState,
@@ -59,7 +68,7 @@ export const quizSlice = createSlice({
 
 export const selectQuiz = (state) => state.quiz;
 
-export const { setPlayerName, setScore, setChoise, resetPlayer } =
+export const { setPlayerName, setScore, setChoise, resetPlayer, tryAgain } =
   quizSlice.actions;
 
 export default quizSlice.reducer;

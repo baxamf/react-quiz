@@ -38,7 +38,7 @@ export default function FormAnswer({ answer }) {
         onChange={answerTextHandler}
         value={answer.answerTitle}
         variant="outlined"
-        sx={{ flex: "1 0 auto" }}
+        sx={{ flex: "1 0 280px" }}
       />
       <Grid container alignItems="center">
         <Switch onChange={correctHandler} checked={answer.isCorrect} />

@@ -1,10 +1,15 @@
 import { Button, Grid, Typography } from "@mui/material";
 import useResultStorage from "../../hooks/useResultStorage";
-import useBackHome from "../../hooks/useBackHome";
+import { useDispatch } from "react-redux";
+import { tryAgain } from "../../features/quiz/quizSlice";
 
 export default function FinalScore({ name, score, question }) {
   const lastResult = useResultStorage(name, `${score} / ${question}`);
-  const backHome = useBackHome();
+  const dispatch = useDispatch();
+
+  const again = () => {
+    dispatch(tryAgain());
+  };
 
   return (
     <Grid className="grid-container" textAlign="center">
@@ -17,8 +22,8 @@ export default function FinalScore({ name, score, question }) {
           Your last result: {lastResult}
         </Typography>
       )}
-      <Button variant="outlined" size="large" onClick={backHome}>
-        Back to home page
+      <Button variant="outlined" size="large" onClick={again}>
+        Try Again
       </Button>
     </Grid>
   );
