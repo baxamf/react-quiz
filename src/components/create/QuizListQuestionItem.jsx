@@ -22,7 +22,7 @@ export default function QuizListQuestionItem({ question, url }) {
 
   return (
     <Grid container alignItems="center" flexWrap="wrap">
-      <Card variant="outlined" sx={{ flex: "1 0 auto", padding: "0.7rem" }}>
+      <Card variant="outlined" sx={{ flex: "1 0", padding: "0.7rem" }}>
         <Typography lineHeight={1.25} variant="subtitle1">
           {question.title}
         </Typography>

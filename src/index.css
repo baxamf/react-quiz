@@ -31,7 +31,7 @@ body {
 }
 
 .quiz-list-container {
-  flex: 1 0 300px;
+  flex: 1 0;
   display: grid;
-  gap: 2rem;
+  gap: 1rem;
 }
